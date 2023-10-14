@@ -1,4 +1,4 @@
-package com.hyunjin.bbsback.config;
+package com.hyunjin.bbsback.controller.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

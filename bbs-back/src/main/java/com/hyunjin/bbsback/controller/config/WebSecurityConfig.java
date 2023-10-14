@@ -1,4 +1,4 @@
-package com.hyunjin.bbsback.config;
+package com.hyunjin.bbsback.controller.config;
 
 import com.hyunjin.bbsback.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
