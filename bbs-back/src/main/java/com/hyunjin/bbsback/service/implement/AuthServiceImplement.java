@@ -1,9 +1,12 @@
 package com.hyunjin.bbsback.service.implement;
 
+import com.hyunjin.bbsback.dto.request.auth.SignInRequestDto;
 import com.hyunjin.bbsback.dto.request.auth.SignUpRequestDto;
 import com.hyunjin.bbsback.dto.response.ResponseDto;
+import com.hyunjin.bbsback.dto.response.auth.SignInResponseDto;
 import com.hyunjin.bbsback.dto.response.auth.SignUpResponseDto;
 import com.hyunjin.bbsback.entity.UserEntity;
+import com.hyunjin.bbsback.provider.JwtProvider;
 import com.hyunjin.bbsback.repository.UserRepository;
 import com.hyunjin.bbsback.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImplement implements AuthService {
 
     private final UserRepository userRepository;    // RequiredArgsConstructor 에 의해 자동으로 생성자가 생성됨
+    private final JwtProvider jwtProvider;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -53,5 +57,34 @@ public class AuthServiceImplement implements AuthService {
         }
 
         return SignUpResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) { // 로그인 메서드
+
+        String token = null;
+
+        try {
+
+            // request dto 에서 이메일을 가져오고 존재 여부 확인
+            String email = dto.getEmail();
+            UserEntity userEntity = userRepository.findByEmail(email);
+            if(userEntity == null) return SignInResponseDto.signInFailed();
+
+            // request dto 에서 비밀번호를 가져오고 db에 저장된 암호화된 비밀번호랑 일치하는지 확인
+            String password = dto.getPassword();
+            String encodedPassword = userEntity.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            if(!isMatched) return SignInResponseDto.signInFailed();
+
+            token = jwtProvider.create(email);
+
+        } catch(Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return SignInResponseDto.success(token);
+
     }
 }

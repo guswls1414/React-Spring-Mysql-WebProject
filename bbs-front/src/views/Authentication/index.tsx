@@ -7,6 +7,8 @@ export default function Authentication() {
 
   //          render: 인증 화면 컴포넌트 렌더링          //
   return (
-    <div>인증 화면</div>
+    <div id='auth-wrapper'>
+      <div className='auth-container'></div>
+    </div>
   )
 }

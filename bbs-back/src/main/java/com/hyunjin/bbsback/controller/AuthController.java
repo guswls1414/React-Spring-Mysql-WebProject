@@ -1,6 +1,8 @@
 package com.hyunjin.bbsback.controller;
 
+import com.hyunjin.bbsback.dto.request.auth.SignInRequestDto;
 import com.hyunjin.bbsback.dto.request.auth.SignUpRequestDto;
+import com.hyunjin.bbsback.dto.response.auth.SignInResponseDto;
 import com.hyunjin.bbsback.dto.response.auth.SignUpResponseDto;
 import com.hyunjin.bbsback.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -27,4 +29,11 @@ public class AuthController {
         return response;
     }
 
+    @PostMapping("/sign-in")
+    public ResponseEntity<? super SignInResponseDto> signIn(
+            @RequestBody @Valid SignInRequestDto requestBody
+    ) {
+        ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
+        return response;
+    }
 }
