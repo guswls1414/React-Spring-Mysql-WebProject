@@ -164,13 +164,6 @@ export default function Header() {
     const isUserPage = pathname.startsWith(USER_PATH(''));
     setIsUserPage(isUserPage);
 
-    console.log("isAuth?" + isAuthPage);
-    console.log(isMainPage);
-    console.log(isSearchPage);
-    console.log(isBoardDetailPage);
-    console.log(isBoardWritePage);
-    console.log(isBoardUpdatePage);
-    console.log(isUserPage);
   }, [pathname])
 
   //        render: 헤더 레이아웃 렌더링        //
