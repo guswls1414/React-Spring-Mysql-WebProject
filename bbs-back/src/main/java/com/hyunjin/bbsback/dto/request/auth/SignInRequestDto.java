@@ -3,7 +3,7 @@ package com.hyunjin.bbsback.dto.request.auth;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
